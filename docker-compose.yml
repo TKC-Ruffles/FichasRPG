@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/rpgdb
+      - JWT_SECRET=secret123
+
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=rpgdb
+      - POSTGRES_PASSWORD=postgres
+
+  ia-service:
+    build: ./ia
+    ports:
+      - "5000:5000"
