@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas RPG - Trupe da Ziza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=MedievalSharp&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c1b15;
+            --secondary-color: #4a3027;
+            --accent-gold: #d4af37;
+            --text-color: #e8e1d7;
+            --parchment: #f0e6d3;
+            --scrollbar-color: #3e2a21;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cinzel', serif;
+        }
+
+        body {
+            background: var(--primary-color) url('https://www.transparenttextures.com/patterns/old-map.png');
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-color);
+            border-radius: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--secondary-color);
+            border-bottom: 3px solid var(--accent-gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(to bottom, var(--accent-gold), #b8860b);
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        .fichas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ficha-card {
+            background: linear-gradient(to bottom right, var(--parchment), #e6d8c3);
+            color: var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .ficha-header {
+            border-bottom: 2px solid var(--accent-gold);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .classe-badge {
+            background: var(--secondary-color);
+            color: var(--accent-gold);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .ficha-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 0.5rem;
+            border: 1px solid var(--accent-gold);
+            background: transparent;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'MedievalSharp', cursive;
+        }
+
+        .action-button:hover {
+            background: var(--accent-gold);
+            color: var(--primary-color);
+        }
+
+        .nova-ficha {
+            background: rgba(0,0,0,0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 3rem 0;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* CORREÇÕES APLICADAS AQUI */
+        .form-input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.9) !important;
+            border: 2px solid var(--accent-gold);
+            color: #000000 !important;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        .form-input option {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>📜 Fichas RPG - Trupe da Ziza</h1>
+        <nav class="nav-links">
+            <button class="nav-button">Minhas Fichas</button>
+            <button class="nav-button">Nova Ficha</button>
+            <button class="nav-button">Login</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="fichas-grid">
+            <article class="ficha-card">
+                <div class="ficha-header">
+                    <h3>Ficha Exemplo I</h3>
+                    <span class="classe-badge">Guerreiro</span>
+                </div>
+                <div class="ficha-actions">
+                    <button class="action-button">Editar</button>
+                    <button class="action-button">Compartilhar</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="nova-ficha">
+            <h2>🆕 Nova Ficha</h2>
+            <form class="form-row">
+                <input type="text" placeholder="Nome do Personagem" class="form-input">
+                <select class="form-input">
+                    <option value="">SELECTONE A RAÇA</option>
+                    <option>AARAKOCRA</option>
+                    <option>AASIMAR</option>
+                    <option>ANÃO</option>
+                    <option>BUGBEAR</option>
+                    <option>CENTAURO</option>
+                    <option>DHAMPIR</option>
+                    <option>DRACONATO</option>
+                    <option>ELFO</option>
+                    <option>FIRBOLG</option>
+                    <option>GENASI</option>
+                    <option>GITH</option>
+                    <option>GNOMO</option>
+                    <option>GOBLIN</option>
+                    <option>GOLIATH</option>
+                    <option>GRUNG</option>
+                    <option>HALFLING</option>
+                    <option>HARENGON</option>
+                    <option>HEXBLOOD</option>
+                    <option>HÍBRIDO SIMIC</option>
+                    <option>HOBGOBLIN</option>
+                    <option>HOLLOW ONE</option>
+                    <option>HUMANO PADRÃO</option>
+                    <option>HUMANO VARIANTE</option>
+                    <option>KALASHTAR</option>
+                    <option>KENKU</option>
+                    <option>KOBOLD</option>
+                    <option>LEONINO</option>
+                    <option>LIZARDFOLK</option>
+                    <option>LOCATHAH</option>
+                    <option>LOXODONTE</option>
+                    <option>MEIO-ELFO</option>
+                    <option>MINOTAURO</option>
+                    <option>ORC</option>
+                    <option>REBORN</option>
+                    <option>SÁTIRO</option>
+                    <option>SHIFTER</option>
+                    <option>TABAXI</option>
+                    <option>TIEFLING</option>
+                    <option>TORTOLE</option>
+                    <option>TRITÃO</option>
+                    <option>VEDALKEN</option>
+                    <option>VERDAN</option>
+                    <option>WARFORGED</option>
+                    <option>YUAN-TI</option>
+                </select>
+            </form>
+            <button class="nav-button" style="width: 100%">Criar Ficha</button>
+        </section>
+    </div>
+</body>
+</html>
